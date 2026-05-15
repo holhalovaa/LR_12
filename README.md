@@ -1,5 +1,12 @@
 # 🚗 Автосервис: управление заказами
 
+**Лабораторная работа №12**  
+**Студент:** Холхалова Алина Сергеевна  
+**Группа:** 220032-11  
+**Вариант:** 28  
+**Уровень сложности:** Средний  
+**Предметная область:** Система управления автосервисом
+
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
