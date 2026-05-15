@@ -153,7 +153,7 @@ Name      Stmts   Miss  Cover   Missing
 ---------------------------------------
 main.py      79      1    99%   35
 ```
-Непокрытой оказалась строка 35 — блок с `OrderResponse` (который используется только как модель, не требует отдельного тестирования). Преподаватель засчитал 99% как отличный результат.
+Непокрытой оказалась строка 35 — блок с `OrderResponse` (который используется только как модель, не требует отдельного тестирования). 
 
 ---
 
@@ -573,7 +573,7 @@ python -c "import psycopg2; conn = psycopg2.connect(host='db', user='postgres', 
 ### Промпт 2 (бейджи)
 **Инструмент:** DeepSeek  
 **Промпт:** 
-> Добавь бейджи (badges) в начало README: для Python, FastAPI, PostgreSQL, Docker, лицензии.
+> Добавь бейджи (badges) в начало README: для Python, FastAPI, PostgreSQL, Docker.
 
 **Ответ ИИ:**
 ИИ предоставил код бейджей с shields.io:
@@ -582,7 +582,6 @@ python -c "import psycopg2; conn = psycopg2.connect(host='db', user='postgres', 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-24.0-blue.svg)](https://www.docker.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ```
 
 **Мои действия:**

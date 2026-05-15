@@ -13,6 +13,7 @@ REST API для управления заказами в автосервисе.
 
 **Основные сущности:**
 - Заказ (Order): госномер авто, ФИО владельца, описание проблемы, статус, итоговая цена, дата создания
+- Мастер (Master): ФИО, специализация, телефон, дата найма
 
 ## 🛠 Технологический стек
 
@@ -36,47 +37,55 @@ REST API для управления заказами в автосервисе.
 
 ### Способ 1: Локальный запуск (без Docker)
 
-## 1. Клонировать репозиторий
-git clone https://github.com/holhalovaa/LR_12
+```bash
+# 1. Клонировать репозиторий
+git clone https://github.com/your-username/autoservice-api.git
 cd autoservice-api
 
-## 2. Создать виртуальное окружение
+# 2. Создать виртуальное окружение
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate     # Windows
 
-## 3. Установить зависимости
+# 3. Установить зависимости
 pip install -r requirements.txt
 
-## 4. Создать файл .env и настроить подключение к БД
+# 4. Создать файл .env и настроить подключение к БД
 cp .env.example .env
-### Отредактируйте .env: DATABASE_URL=postgresql://user:pass@localhost:5432/autoservice_db
+# Отредактируйте .env: DATABASE_URL=postgresql://user:pass@localhost:5432/autoservice_db
 
-## 5. Применить миграции
+# 5. Применить миграции
 alembic upgrade head
 
-## 6. Запустить приложение
+# 6. Запустить приложение
 uvicorn main:app --reload --port 8000
+```
 
-Способ 2: Запуск через Docker (рекомендуемый)
-bash
-## 1. Скопировать переменные окружения
+### Способ 2: Запуск через Docker (рекомендуемый)
+
+```bash
+# 1. Скопировать переменные окружения
 cp .env.example .env
 
-## 2. Запустить контейнеры
+# 2. Запустить контейнеры
 docker-compose up --build
+```
 
-## Приложение будет доступно на http://localhost:8000
-## PostgreSQL на порту 5432
-Способ 3: Запуск тестов
-bash
-## Установить тестовые зависимости
+Приложение будет доступно на `http://localhost:8000`, PostgreSQL на порту `5432`
+
+### Способ 3: Запуск тестов
+
+```bash
+# Установить тестовые зависимости
 pip install pytest pytest-cov httpx
 
-## Запустить тесты
+# Запустить тесты
 pytest test_main.py -v --cov=main --cov-report=term-missing
-Результат тестов: 18 passed, покрытие 94%
+```
 
+**Результат тестов:** 18 passed, покрытие 94%
+
+```
 ============================= test session starts =============================
 collected 18 items
 
@@ -99,15 +108,17 @@ test_main.py::test_delete_order_not_found PASSED
 test_main.py::test_create_order_with_long_description PASSED
 test_main.py::test_update_order_negative_price PASSED
 
-============================= 18 passed in 1.24s ==============================
+============================= 18 passed in 1.25s ==============================
+```
 
-# API Эндпоинты
-Базовая URL: http://localhost:8000
+## 📡 API Эндпоинты
 
-## GET /orders — получить все заказы
-Ответ:
+**Базовая URL:** `http://localhost:8000`
 
-json
+### GET /orders — получить все заказы
+
+**Ответ:**
+```json
 [
   {
     "id": 1,
@@ -119,10 +130,12 @@ json
     "created_at": "2026-05-15T16:00:00"
   }
 ]
-## POST /orders — создать заказ
-Запрос:
+```
 
-json
+### POST /orders — создать заказ
+
+**Запрос:**
+```json
 {
   "car_number": "А123ВС777",
   "owner_name": "Иван Петров",
@@ -130,29 +143,46 @@ json
   "status": "принят",
   "total_price": 0
 }
-Ответ: 201 Created + данные созданного заказа
+```
 
-## GET /orders/{id} — получить заказ по ID
-Ответ: 200 OK + данные заказа
+**Ответ:** `201 Created` + данные созданного заказа
 
-Ошибка: 404 Not Found
+### GET /orders/{id} — получить заказ по ID
 
-## PUT /orders/{id} — полное обновление
-Запрос: (все поля обязательны)
+**Ответ:** `200 OK` + данные заказа
 
-Ответ: 200 OK
+**Ошибка:** `404 Not Found`
 
-## PATCH /orders/{id} — частичное обновление
-Запрос: (только изменяемые поля)
+### PUT /orders/{id} — полное обновление
 
-json
+**Запрос:** все поля обязательны
+
+**Ответ:** `200 OK`
+
+### PATCH /orders/{id} — частичное обновление
+
+**Запрос:**
+```json
 {
   "status": "готов"
 }
-Ответ: 200 OK
+```
 
-## DELETE /orders/{id} — удалить заказ
-Ответ: 204 No Content
+**Ответ:** `200 OK`
+
+### DELETE /orders/{id} — удалить заказ
+
+**Ответ:** `204 No Content`
+
+### GET /health — проверка работоспособности
+
+**Ответ:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2026-05-15T16:58:37.209443"
+}
+```
 
 ## 🔐 Переменные окружения (.env)
 
@@ -164,27 +194,41 @@ json
 | `POSTGRES_DB` | Название базы данных | `autoservice_db` |
 | `APP_ENV` | Окружение (development/production) | `development` |
 | `APP_PORT` | Порт приложения | `8000` |
-| `SECRET_KEY` | Секретный ключ для JWT (опционально) | `your-secret-key-here-change-in-production` |
 
 ## 📁 Структура проекта
-text
+
+```
 autoservice-api/
-├── main.py              # FastAPI приложение
-├── models.py            # SQLAlchemy модели
-├── database.py          # Подключение к БД
-├── test_main.py         # Pytest тесты
-├── bad_code.py          # Плохой код (задание 3)
-├── good_code.py         # Отрефакторенный код (задание 3)
-├── requirements.txt     # Зависимости
-├── Dockerfile           # Docker образ
-├── docker-compose.yml   # Docker Compose
-├── alembic.ini          # Конфигурация Alembic
-├── alembic/             # Миграции Alembic
-├── .env.example         # Пример переменных окружения
-├── .gitignore
-└── README.md
+├── main.py                      # FastAPI приложение (CRUD, CORS, XSS защита)
+├── models.py                    # SQLAlchemy модели (Order, Master)
+├── database.py                  # Подключение к БД (SQLAlchemy engine, Session)
+├── test_main.py                 # Pytest тесты (18 тестов, покрытие 94%)
+├── bad_code.py                  # Плохой код для рефакторинга (задание 3)
+├── good_code.py                 # Отрефакторенный код (задание 3)
+├── validate_plate.py            # Регулярное выражение для госномера (задание 10)
+├── sql_report_top_masters.sql   # SQL-запрос топ-3 мастеров (задание 9)
+├── requirements.txt             # Зависимости проекта
+├── Dockerfile                   # Docker образ для FastAPI
+├── docker-compose.yml           # Docker Compose (app + PostgreSQL)
+├── alembic.ini                  # Конфигурация Alembic
+├── alembic/                     # Миграции Alembic
+│   ├── env.py
+│   ├── script.py.mako
+│   └── versions/
+│       ├── 52ee699c07a3_create_orders_table.py
+│       └── 2a3b4c5d6e7f_add_masters_table.py
+├── migrations/                  # Raw SQL миграции (опционально)
+│   └── add_masters_table.sql
+├── .env.example                 # Пример переменных окружения
+├── .gitignore                   # Игнорируемые файлы
+├── PROMPT_LOG.md                # Лог всех промптов (44 промпта)
+└── README.md                    # Документация проекта
+```
 
 ## 👤 Автор
-Вариант 28: Система управления автосервисом
-Выполнила: Холхалова Алина
-Группа: 220032-11
+
+**Вариант 28:** Система управления автосервисом
+
+**Выполнила:** Холхалова Алина
+
+**Группа:** 220032-11
