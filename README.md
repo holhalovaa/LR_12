@@ -39,7 +39,7 @@ REST API для управления заказами в автосервисе.
 
 ```bash
 # 1. Клонировать репозиторий
-git clone https://github.com/your-username/autoservice-api.git
+git clone https://github.com/holhalovaa/LR_12
 cd autoservice-api
 
 # 2. Создать виртуальное окружение
