@@ -11,7 +11,15 @@ from sqlalchemy.orm import sessionmaker
 
 from main import app
 from database import Base, get_db
-from models import Order, OrderStatus, Master
+from models import Order, OrderStatus
+
+# Применяем миграции перед тестами
+from alembic.config import Config
+from alembic import command
+
+alembic_cfg = Config("alembic.ini")
+command.upgrade(alembic_cfg, "head")
+
 
 # ========== Настройка тестовой базы данных SQLite (in-memory) ==========
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -22,9 +30,6 @@ engine = create_engine(
     poolclass=StaticPool,
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Создаём таблицы для тестов
-Base.metadata.create_all(bind=engine)
 
 
 def override_get_db():

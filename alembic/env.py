@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from database import Base
-from models import Order
+from models import Order, Master
 
 config = context.config
 
